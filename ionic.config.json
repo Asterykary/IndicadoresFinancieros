@@ -1,0 +1,7 @@
+{
+  "name": "indicadoresFinancieros",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
