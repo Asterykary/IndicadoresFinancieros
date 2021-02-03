@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IndicatorsService } from '../../services/indicators.service';
 import { ActivatedRoute } from '@angular/router';
+import { ResponseIndicatorDetail } from 'src/app/interfaces/indicatorDetail.interface';
 
 @Component({
   selector: 'app-indicator-detail',
@@ -9,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class IndicatorDetailPage implements OnInit {
 
-  indicator: any = null;
+  indicator: ResponseIndicatorDetail = null;
 
   constructor(private indicatorServ: IndicatorsService, private route: ActivatedRoute) { }
 
@@ -19,8 +20,7 @@ export class IndicatorDetailPage implements OnInit {
   }
 
   getIndicatorDetail(id: string){
-    this.indicatorServ.getIndicatorDetail(id).subscribe((data) => {
-      console.log(data);
+    this.indicatorServ.getIndicatorDetail(id).subscribe((data: ResponseIndicatorDetail) => {
       this.indicator = data;
     },
       (error) => { console.log(error); }

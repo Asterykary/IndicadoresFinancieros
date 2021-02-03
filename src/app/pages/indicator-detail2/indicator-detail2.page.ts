@@ -5,6 +5,7 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import { IndicatorsService } from '../../services/indicators.service';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { ResponseIndicatorDetail, Serie } from '../../interfaces/indicatorDetail.interface';
 
 @Component({
   selector: 'app-indicator-detail2',
@@ -60,10 +61,10 @@ export class IndicatorDetail2Page implements OnInit {
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-  indicator: any = null;
+  indicator: ResponseIndicatorDetail = null;
 
   
-  firstTenIndicators: any[] = null;
+  firstTenIndicators: Serie[] = null;
 
   constructor(private indicatorServ: IndicatorsService, private route: ActivatedRoute, private datePipe: DatePipe) { }
 
@@ -73,8 +74,7 @@ export class IndicatorDetail2Page implements OnInit {
   }
 
   getIndicatorDetail(id: string){
-    this.indicatorServ.getIndicatorDetail(id).subscribe((data) => {
-      console.log(data);
+    this.indicatorServ.getIndicatorDetail(id).subscribe((data: ResponseIndicatorDetail) => {
       this.indicator = data;
       this.firstTenIndicators = this.indicator.serie.slice(0,10);
       this.firstTenIndicators.forEach((indicator)=>{
@@ -82,7 +82,6 @@ export class IndicatorDetail2Page implements OnInit {
         this.lineChartLabels.push( this.datePipe.transform(indicator.fecha, 'yyyy-MM-dd'));
       });
       this.lineChartData[0].label = this.indicator.nombre;
-      console.log(this.firstTenIndicators);
     },
       (error) => { console.log(error); }
     );

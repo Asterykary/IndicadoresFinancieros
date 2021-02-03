@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { IndicatorsService } from '../../services/indicators.service';
+import { ResponseIndicators } from '../../interfaces/indicators.interface';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,9 @@ import { IndicatorsService } from '../../services/indicators.service';
 })
 export class HomePage implements OnInit {
 
-  indicators: any = null;
+  indicators: ResponseIndicators = null;
 
-  indicatorsKeys: any[] = null;
+  indicatorsKeys: string[] = null;
 
   constructor(public indicatorsS: IndicatorsService, private navCtrl: NavController) {
 
@@ -19,15 +20,13 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.indicatorsS.getData().subscribe((data) => {
-      console.log(data);
+    this.indicatorsS.getData().subscribe((data: ResponseIndicators) => {
       this.indicators = data;
       delete this.indicators['fecha'];
       delete this.indicators['version'];
       delete this.indicators['autor'];
       this.indicatorsKeys = Object.keys(this.indicators);
 
-      console.log(this.indicatorsKeys);
     },
       (error) => { console.log(error); }
     );
