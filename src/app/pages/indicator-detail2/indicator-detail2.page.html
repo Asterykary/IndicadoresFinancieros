@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{indicator?.nombre}}</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button [text]="''"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="indicator != null">
+    <ion-grid>
+        <ion-row>
+            <ion-col class="ion-padding ion-text-center">
+                <ion-text color="primary">
+                    <h1>$ {{indicator.serie[0].valor}}
+                    </h1>
+                </ion-text>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-list>
+        <ion-item>
+            <ion-label>Nombre</ion-label>
+            <ion-input class="ion-text-end" [value]="indicator.nombre" readonly></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Fecha</ion-label>
+            <ion-input class="ion-text-end" [value]="indicator.serie[0].fecha | date: 'yyyy-MM-dd'" readonly></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Unidad de Medida</ion-label>
+            <ion-input class="ion-text-end" [value]="indicator.unidad_medida" readonly></ion-input>
+        </ion-item>
+    </ion-list>
+    <div style="display: block;">
+        <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins"></canvas>
+    </div>
+</ion-content>
